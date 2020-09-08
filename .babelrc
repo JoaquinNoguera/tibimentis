@@ -1,0 +1,22 @@
+{
+    "presets": [
+        [
+            "babel/preset.env",
+            {
+                "target": {
+                    "node" : "12.16.1",
+                    "esmodules": false
+                }
+            }
+        ],
+        "@babel/preset-react"
+    ],
+    "plugins": [ 
+        "@babel/plugin-proposal-class-properties", 
+        ["@babel/plugin-transform-runtime",
+            {
+              "regenerator": true
+            }
+        ]
+    ]
+}
