@@ -3,12 +3,12 @@ import {
     animated,
     useSpring 
 } from 'react-spring';
+import { InputObject } from '../types/Input';
 
 interface inputPropsType extends React.HTMLAttributes<HTMLInputElement> {
     type: string,
     required: boolean
 }
-
 
 interface InputProps{
     init : string,
@@ -16,11 +16,6 @@ interface InputProps{
     message: string,
     error: boolean,
     name: string
-}
-interface InputObject {
-    value : string,
-    setValue: Function,
-    input : JSX.Element
 }
 
 export default function useInputWithError(
@@ -73,7 +68,7 @@ export default function useInputWithError(
                                             setValue(e.target.value)
                             }}
                         />
-                        <animated.span style={animSpan} className='auth__spanError'>
+                        <animated.span style={animSpan} className='spanError'>
                             { message }
                         </animated.span>
                     </label>

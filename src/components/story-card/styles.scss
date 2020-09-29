@@ -1,0 +1,32 @@
+.storyCard{
+    display: flex;
+    flex-direction: column;
+    padding: 2em;
+    background-color: #ffffff;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    margin-bottom: 1em;
+
+    .storyCard__header{
+        display: flex;
+        align-items: flex-end;
+        
+        h1, h3{
+            margin: 0;
+        }
+
+        h3{
+            color: #07689F;
+            margin-left: 0.2em;
+            margin-bottom: 0.2em;
+        }
+
+    }
+
+    .storyCard__botton{
+        display: flex;
+        justify-content: flex-end;
+        button {
+            margin: 0.2em;
+        }
+    }
+}

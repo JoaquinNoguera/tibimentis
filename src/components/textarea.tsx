@@ -1,29 +1,35 @@
 import * as React from "react";
-import {InputObject } from '../types/Input';
 
-interface inputPropsType extends React.HTMLAttributes<HTMLInputElement> {
+
+interface textareaPropsType extends React.HTMLAttributes<HTMLTextAreaElement> {
     type: string,
     required: boolean
 }
 
-interface InputProps{
+
+interface textareaProps{
     init : string,
     name: string,
-    otherProps: inputPropsType
+    otherProps: textareaPropsType
+}
+interface textareaObject {
+    value : string,
+    setValue: Function,
+    textarea : JSX.Element
 }
 
-export default function useInput(
+export default function usetextarea(
     {
         init, 
         name,
         otherProps 
-    }  : InputProps ) : InputObject {
+    }  : textareaProps ) : textareaObject {
 
   const [ value, setValue ] = React.useState<string>(init);
 
-  const input =    <label className='input' >
+  const textarea =    <label className='textarea'>
                         { name }
-                        <input 
+                        <textarea 
                             { ...otherProps }
                             value={value}
                             onChange={e=> {
@@ -32,5 +38,5 @@ export default function useInput(
                         />
                     </label> 
 
-  return { value, setValue, input };
+  return { value, setValue, textarea };
 }
