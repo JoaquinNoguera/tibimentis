@@ -4,12 +4,14 @@ import {
     Link
 } from 'react-router-dom';
 import { db } from '../../../../../firebase';
-import { Stories, Story } from '../../../../../types/Story';
+import { Stories } from '../../../../../models/Story';
 import { StateContext } from '../../../../context/context';
 import {useSpring, animated} from 'react-spring';
-import StoryCard from '../../../../../components/story-card';
+import StoryCard from '../../components/story-card';
 import useInputSearch from '../../../../../components/inputSearch';
+import Spinner from '../../../../../components/spinner';
 import Pagination from '../../../../../components/pagination';
+
 import './styles.scss';
 
 const ControlPanel = () => {
@@ -18,9 +20,8 @@ const ControlPanel = () => {
     const [ visibleStories, setVisibleStories ] = React.useState<Stories>(null);
     const [ publicStories, tooglePublicStories ] = React.useState<boolean>( true );
     const [ privateStories, tooglePrivateStories ] = React.useState<boolean>( true );
+    const [ loading, toogleLoading ] = React.useState<boolean>( false );
     const isMountedRef = React.useRef(null);
-
-    const searchInput = useInputSearch({});
 
     const publicProps = useSpring({
         fill: publicStories ? '#ffffff' : '#07689F',
@@ -34,6 +35,7 @@ const ControlPanel = () => {
     const { state } = React.useContext( StateContext );
     
     const getStories = async () : Promise<void> => {
+        toogleLoading(true);
         const consult = await db    .collection('Story')
                                     .where("userId", "==", state.id)
                                     .get();
@@ -55,31 +57,43 @@ const ControlPanel = () => {
             setStories(stories);
             setVisibleStories(stories);
         }
+        toogleLoading(false);
     }
 
     const onDeleteStory = ( id : string ) : void => {
         const i = stories.findIndex( s => s.id === id);
         let newStories = stories;
         newStories.splice(i,1); 
-        setStories( newStories );
+        getStories();
     }
+
+    const filterStories = () => {
+        const re = new RegExp(`(${searchInput.value.toUpperCase()})`);
+        if( stories ){
+            setVisibleStories(
+                stories.filter( s => {
+                   if( ( searchInput.value === "" ||  s.title.toUpperCase().search( re ) !== -1 ) )  
+                        return s;
+                    else
+                        return null;
+                })
+            )
+        }
+    }
+
 
     React.useEffect(()=>{
         isMountedRef.current = true;
         getStories();
         return () => isMountedRef.current = false;
-    },[ stories ])
+    },[ ])
     
 
     React.useEffect(()=>{
         if( stories ){
-            const re = new RegExp(`(${searchInput.value.toUpperCase()})`);
             setVisibleStories(
                 stories.filter( s => {
-                   if(    
-                        (( s.isPublic && publicStories ) || ( !s.isPublic && privateStories )) 
-                        && ( searchInput.value === "" ||  s.title.toUpperCase().search( re ) !== -1 )
-                    )  
+                   if( ( s.isPublic && publicStories ) || ( !s.isPublic && privateStories ) )  
                         return s;
                     else
                         return null;
@@ -87,13 +101,20 @@ const ControlPanel = () => {
             )
         }
         
-    },[ publicStories, privateStories, searchInput.value]);
+    },[ publicStories, privateStories ]);
 
+    const searchInput = useInputSearch({
+        onClick: filterStories
+    });
 
     const listCard : JSX.Element[]= ( visibleStories ) ?
                         visibleStories.map( s =>  <StoryCard key={s.id} { ...s }  onDeleteStory={ onDeleteStory }/> ) : [];
+    
+    console.log(listCard);
+
     return(
         <div id="controlPanel">
+            { loading && <Spinner/> }
             <div className="controlPanel__header">
                 <div className="hedaer__left">
                     <h1>Panel de Administración</h1>

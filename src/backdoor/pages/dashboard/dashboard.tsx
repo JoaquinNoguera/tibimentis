@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 import NotFound from '../../../components/404';
 import ControlPanel from './pages/control-panel';
-import NewStory from './pages/new-story';
+import EditStory from './pages/edit-story';
 import { 
     animated,
     useTransition 
@@ -45,8 +45,8 @@ const Dashboard= () => {
                     <HeaderDashboard/>
                     <Switch location={item}>
                         <Route exact path='/backdoor/' component={ ControlPanel }/>
-                        <Route exact path='/backdoor/new' component={ NewStory }/>
-                        <Route exact path='/backdoor/story/:id' />
+                        <Route exact path='/backdoor/new' component={ EditStory }/>
+                        <Route exact path='/backdoor/story/:id' component={ EditStory }/>
                         <Route component={ NotFound }/>
                     </Switch>
                 </animated.div>

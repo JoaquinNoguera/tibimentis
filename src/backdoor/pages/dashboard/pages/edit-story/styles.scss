@@ -67,6 +67,17 @@
                     resize: none;
                 }
             }
+            .content_toogle{
+                display: flex;
+                align-items: center;
+                .switch{
+                    margin: 0;
+                    transform: scale( 0.8 );
+                }
+                span {
+                    font-size: 2em;
+                }
+            }
         }
         .content__option{
             padding: 1em;

@@ -21,7 +21,10 @@ type DragAndDropProps = {
         if(match){
         const reader = new FileReader();
         reader.onloadend = function() {
-             saveFile( String( reader.result ) );
+             saveFile( {
+                url: String( reader.result ),
+                file
+             } );
         }
         reader.readAsDataURL(file);
     }

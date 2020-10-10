@@ -5,7 +5,8 @@ type Story = {
     isPublic: boolean,
     title: string,
     userId: string,
-    image?: string
+    image?: string,
+    imageM?: string,
 }
 
 

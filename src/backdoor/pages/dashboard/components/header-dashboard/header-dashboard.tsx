@@ -5,6 +5,7 @@ import UserIcon from '../../../../../static/user.svg';
 import { StateContext } from '../../../../context/context';
 import { actionTypes } from '../../../../context/reducer';
 import Popup from '../../../../../components/popup';
+import Spinner from '../../../../../components/spinner';
 import useInputWhitError from '../../../../../components/inputWhitError';
 import './styles.scss';
 
@@ -13,6 +14,7 @@ const HeaderDashboard = () => {
     const [ show, toogleShow ] = React.useState<boolean>(false);
     const [ popup, setPopup ] = React.useState<boolean>(false);
     const [ changeNameError, toooglechangeNameError ] = React.useState<boolean>(false);
+    const [ loading, toogleLoading ] = React.useState<boolean>(false);
     
     const { state, dispatch } = React.useContext( StateContext );
     const dropdownProps = useSpring({
@@ -60,6 +62,7 @@ const HeaderDashboard = () => {
     }
     
     const changeName = () => {
+        toogleLoading(true);
         db.runTransaction(  async ( transaction ) => {
             
             const autorRef = db.collection('autor').doc( state.id );
@@ -77,8 +80,12 @@ const HeaderDashboard = () => {
                     name: usernameInput.value
                 }
             });
+            toogleLoading( false );
             tooglePopup();
-        }).catch( err => toooglechangeNameError( true ) );
+        }).catch( () => {
+            toooglechangeNameError( true );
+            toogleLoading(false);   
+        });
     }
 
     return(
@@ -158,6 +165,7 @@ const HeaderDashboard = () => {
                 </div>
             </form>
         </Popup>
+        { loading && <Spinner/> }
         </>
     );
 }

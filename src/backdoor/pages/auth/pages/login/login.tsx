@@ -3,12 +3,14 @@ import { Link } from 'react-router-dom';
 import {
     auth
 } from '../../../../../firebase/index';
+import Spinner from '../../../../../components/spinner';
 import useInputWhitError from '../../../../../components/inputWhitError';
 const Login = () => {
 
     
     const [emailError, tooogleEmailError ] = React.useState<boolean>(false);
     const [passwordError, tooglePasswordError ] = React.useState<boolean>(false); 
+    const [ loading, toogleLoading ] = React.useState<boolean>(false);
 
     const emailInput = useInputWhitError({
         init:'',
@@ -46,16 +48,19 @@ const Login = () => {
 
 
     const login = () => {
+        toogleLoading(true);
         auth.signInWithEmailAndPassword( emailInput.value, passwordInput.value)
             .then()
             .catch( ({ code }) => {
                 switch(code){
                     case 'auth/user-not-found':{
                         tooogleEmailError(true);
+                        toogleLoading(false);
                         break;
                     }
                     case 'auth/wrong-password': {
                         tooglePasswordError(true);
+                        toogleLoading(false);
                         break;
                     }
                     default: {
@@ -72,6 +77,7 @@ const Login = () => {
             e.preventDefault();
             login();
         }}>
+            { loading && <Spinner/> }
             <h1> 
                 Ingresar 
             </h1>

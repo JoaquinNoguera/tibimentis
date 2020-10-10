@@ -3,7 +3,7 @@ import {
     animated,
     useSpring 
 } from 'react-spring';
-import { InputObject } from '../types/Input';
+import { InputObject } from '../models/Input';
 
 interface inputPropsType extends React.HTMLAttributes<HTMLInputElement> {
     type: string,

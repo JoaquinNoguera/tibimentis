@@ -4,6 +4,7 @@ import Auth from './pages/auth';
 import { StateContext } from './context/context';
 import { actionTypes } from './context/reducer';
 import Dashboard from './pages/dashboard';
+import Spinner from '../components/spinner';
 
 
 const Backdoor : React.FunctionComponent = () => {
@@ -35,7 +36,7 @@ const Backdoor : React.FunctionComponent = () => {
     }, []);
  
     if( loading ){
-        return <div> Loading... </div>
+        return <Spinner/>
     }else {
         if( state ){
             return (

@@ -3,12 +3,14 @@ import { Link } from 'react-router-dom';
 import {
     auth
 } from '../../../../../firebase/index';
+import Spinner from '../../../../../components/spinner';
 import useInputWhitError from '../../../../../components/inputWhitError';
 
 
 const Recover : React.FunctionComponent = () => {
 
     const [emailError, tooogleEmailError ] = React.useState<boolean>(false);
+    const [loading, toogleLoading ] = React.useState<boolean>(false);
 
     const emailInput = useInputWhitError({
         init:'',
@@ -27,10 +29,12 @@ const Recover : React.FunctionComponent = () => {
     },[emailInput.value]);
 
     const recover = () => {
+        toogleLoading(true);
         auth.sendPasswordResetEmail(emailInput.value).then(function() {
             emailInput.setValue('');
           }).catch(function(error) {
             tooogleEmailError(true);
+            toogleLoading(false);
           });
     }
 
@@ -40,6 +44,7 @@ const Recover : React.FunctionComponent = () => {
             e.preventDefault();
             recover();
         }}>
+            { loading && <Spinner/> }
             <h1>
                 Recuperar Contraseña
             </h1>

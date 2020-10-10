@@ -1,5 +1,5 @@
 import * as React from "react";
-import {InputObject } from '../types/Input';
+import {InputObject } from '../models/Input';
 
 interface inputPropsType extends React.HTMLAttributes<HTMLInputElement> {
     type: string,

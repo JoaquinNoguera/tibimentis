@@ -6,6 +6,7 @@ import {
     auth, 
     db
 } from '../../../../../firebase/index';
+import Spinner from '../../../../../components/spinner';
 import useInput from '../../../../../components/input';
 import useInputWithError from '../../../../../components/inputWhitError';
 
@@ -16,6 +17,7 @@ const Singin : React.FunctionComponent = () => {
     const [emailError, tooogleEmailError ] = React.useState<boolean>(false);
     const [passwordError, tooglePasswordError ] = React.useState<boolean>(false); 
     const [codeError, toogleCodeError ] = React.useState<boolean>(false);
+    const [ loading, toogleLoading ] = React.useState<boolean>(false);
    
     const usernameInput = useInput({
         init:'',
@@ -82,7 +84,7 @@ const Singin : React.FunctionComponent = () => {
         if( passwordInput.value.length >= 6){
                 const result = await db.collection('code').where( "value" , "==" , codeInput.value ).get();
             if( result.docs.length ){
-
+                toogleLoading(true);
                 const { user } = await auth.createUserWithEmailAndPassword( emailInput.value, passwordInput.value );
                 
                 await user.sendEmailVerification();
@@ -90,7 +92,7 @@ const Singin : React.FunctionComponent = () => {
                 await db.collection('autor').doc( user.uid ).set({
                     username: usernameInput.value
                 });
-
+                toogleLoading(false);
                 }else{
                     toogleCodeError(true);
             }
@@ -108,6 +110,7 @@ const Singin : React.FunctionComponent = () => {
                                             singin();
                                         }  
         }>
+            { loading && <Spinner/> }
             <h1> Registrarse </h1>
             
             { usernameInput.input }
