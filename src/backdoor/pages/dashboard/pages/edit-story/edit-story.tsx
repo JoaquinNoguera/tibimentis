@@ -15,6 +15,7 @@ import DragAndDrop from '../../../../../components/drag-and-drop';
 import { StateContext } from '../../../../context/context';
 import Spinner from '../../../../../components/spinner';
 import Popup from '../../../../../components/popup';
+import NotFound from '../../../../../components/404';
 import './styles.scss';
 
 interface StoryProps {
@@ -24,21 +25,18 @@ interface StoryProps {
 interface Imagen {
     url: string,
     file: File,
-    fileM?: File
 }
 
 const EditStory = () => {
 
     const param = useParams<StoryProps>();
-    let imgPrev : {
-        image: string,
-        imageM: string
-    } = null;
+    let imgPrev : string = null;
     const [image, setImage] = React.useState<Imagen>(null);
     const { state } = React.useContext( StateContext );
     const [loading,toogleLoading] = React.useState<boolean>(true);
     const [ popup, tooglePopup ] = React.useState<boolean>(false);
     const [ finish, toogleFinish ] = React.useState<boolean>(false);
+    const [ notExist, toogleNotExist ] = React.useState<boolean>(false);
     const imageRef = storage.ref().child('images');
 
 
@@ -65,15 +63,16 @@ const EditStory = () => {
                                     file: null,
                                     url: url
                                 })
-                                imgPrev = {
-                                    image: data.image,
-                                    imageM: data.imageM
-                                };
+                                imgPrev = data.image;
                                 toogleLoading( false );
                         });
                         }else {
                             toogleLoading( false );
                         }
+                    }else{
+                        toogleNotExist(true);
+                        toogleLoading( false )
+
                     }
                 }
             )
@@ -90,40 +89,16 @@ const EditStory = () => {
         if(file && match ){
             toogleLoading(true);
             const reader = new FileReader();
+            reader.readAsDataURL(file);
             reader.onloadend = () => {
-                const img = new Image();
-                img.src = String(reader.result);
-                img.onload = ( e : any ) => {
-                    const  canvas = document.createElement("canvas");
-                    const MAX_HEIGHT = 400;
-                    const sacaleSize = MAX_HEIGHT / e.target.height;
-                    canvas.height =  MAX_HEIGHT;
-                    canvas.width =  sacaleSize * e.target.width;
-                    const ctx = canvas.getContext("2d");
-                    ctx.drawImage(e.target, 0, 0, canvas.width, canvas.height);
-                    const srcEncoded = ctx.canvas.toDataURL(e.target, "image/jpeg");
-                    const bytes = srcEncoded.split(',')[0].indexOf('base64') >= 0 ?
-                    atob(srcEncoded.split(',')[1]) : (window).unescape(srcEncoded.split(',')[1]);  
-                    const mime = srcEncoded.split(',')[0].split(':')[1].split(';')[0];
-                    const max = bytes.length;
-                    const ia = new Uint8Array(max);
-                    for (var i = 0; i < max; i++) {
-                        ia[i] = bytes.charCodeAt(i);
-                    }
-                    
-                    const min = new File([ia],`min_${file.name}`,{type:mime});
-
                     setImage({
                         url: String(reader.result),
-                        file,
-                        fileM: min
+                        file
                     });
                     toogleLoading(false);
                 }
-            
             }
-            reader.readAsDataURL(file);
-        }
+           
     }
 
     
@@ -155,14 +130,11 @@ const EditStory = () => {
         toogleLoading(true);
         if( param.id ){
             if( ( !image && imgPrev ) || ( image?.file && imgPrev ) ){
-                imageRef.child( imgPrev.image ).delete().catch(() => console.log('error'));
-                imageRef.child( imgPrev.imageM ).delete().catch(() => console.log('error'));
-            }else{
+                imageRef.child( imgPrev ).delete().catch(() => console.log('error'));
+             }else{
                 if ( image?.file ){
                     await imageRef  .child( state.id + titleInput.value + image?.file.name )
                                     .put( image?.file );
-                    await imageRef  .child( state.id + titleInput.value + image?.fileM.name )
-                                    .put( image?.fileM );
                 }
 
                 await db.collection('Story').doc(param.id).update({
@@ -170,7 +142,6 @@ const EditStory = () => {
                     content: pTextarea.value,
                     isPublic : toogle.value,
                     image: ( image?.file ) ? state.id + titleInput.value + image?.file.name : null,
-                    imageM: ( image?.fileM ) ? state.id + titleInput.value + image?.fileM.name : null,
                     userId: state.id,
                     autorName: state.name
                 })          
@@ -181,15 +152,12 @@ const EditStory = () => {
                 if( image?.file ){
                     await imageRef  .child( state.id + titleInput.value + image?.file.name )
                                     .put( image?.file );
-                    await imageRef  .child( state.id + titleInput.value + image?.fileM.name )
-                                    .put( image?.fileM );
                 }
                     await db.collection('Story').add({
                         title: titleInput.value,
                         content: pTextarea.value,
                         isPublic: toogle.value,
                         image:  ( image?.file ) ? state.id + titleInput.value + image?.file.name : null,
-                        imageM:  ( image?.fileM ) ? state.id + titleInput.value + image?.fileM.name : null,
                         userId: state.id,
                         autorName: state.name,
                     })
@@ -206,13 +174,20 @@ const EditStory = () => {
     toogleFinish( true );
     }   
 
-    return(
-    <>
+    if(notExist){
+        return <NotFound/>
+    }else{
+        return(
+        <>
         <div id="newStory">
             { loading && <Spinner/> }
             <div className="newStory__header">
                 <div className="hedaer__left">
-                    <h1>Nueva Historia</h1>
+                    {
+                        ( param.id ) ? 
+                            <h1> Editar </h1> : 
+                            <h1>Nueva Historia</h1>                       
+                    }
                 </div>
                 <div className="hedaer__right">
                     <Link
@@ -338,6 +313,7 @@ const EditStory = () => {
         </Popup>
     </>
     );
+    }
 }
 
 export default EditStory;

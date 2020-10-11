@@ -32,6 +32,7 @@ const Recover : React.FunctionComponent = () => {
         toogleLoading(true);
         auth.sendPasswordResetEmail(emailInput.value).then(function() {
             emailInput.setValue('');
+            toogleLoading(false);
           }).catch(function(error) {
             tooogleEmailError(true);
             toogleLoading(false);

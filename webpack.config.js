@@ -11,9 +11,7 @@ return{
         app: path.resolve(__dirname, 'src', 'index.tsx')
     },
     output: {
-        path: ( options.mode === 'production') ? 
-                                            (path.resolve(__dirname, 'dist','public')) : 
-                                            (path.resolve(__dirname, 'dev','public')),
+        path: path.resolve(__dirname, 'dist'),
         filename: '[name].js',
         publicPath: '/'
     },

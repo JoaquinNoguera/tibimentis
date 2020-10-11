@@ -77,3 +77,32 @@
         }
     }
 }
+
+@media  (max-width: 800px) {
+    .controlPanel__header{
+        flex-direction: column;
+    }
+    .hedaer__right{
+        flex-direction: column;
+        margin: 10px 0;
+
+        .search{
+            margin: 10px 0;
+        }
+    }
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 556px), 
+screen and (min-device-height: 320px) and (max-device-height: 556px){
+        .controlPanel__header{
+            flex-direction: column;
+        }
+        .hedaer__right{
+            flex-direction: column;
+            margin: 10px 0;
+
+            .search{
+                margin: 10px 0;
+            }
+        }
+}

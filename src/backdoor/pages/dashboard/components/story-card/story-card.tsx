@@ -37,7 +37,7 @@ const StoryCard = ( props : storyCardProps ) => {
                 <h1> {props.title} </h1>
                 { !props.isPublic ? <h3> Borrador </h3> : null }
             </div>
-            <p> {props.content.substr(0,200)}... </p>
+            <p> {props.content.substr(0,200)} { (props.content.length > 200) ? '...' : '.'} </p>
             <div className="storyCard__botton">
                 <button 
                     className="button__primary"

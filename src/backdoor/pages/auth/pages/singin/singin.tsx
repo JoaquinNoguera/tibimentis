@@ -9,6 +9,7 @@ import {
 import Spinner from '../../../../../components/spinner';
 import useInput from '../../../../../components/input';
 import useInputWithError from '../../../../../components/inputWhitError';
+import Popup from '../../../../../components/popup';
 
 
 const Singin : React.FunctionComponent = () => {
@@ -17,7 +18,8 @@ const Singin : React.FunctionComponent = () => {
     const [emailError, tooogleEmailError ] = React.useState<boolean>(false);
     const [passwordError, tooglePasswordError ] = React.useState<boolean>(false); 
     const [codeError, toogleCodeError ] = React.useState<boolean>(false);
-    const [ loading, toogleLoading ] = React.useState<boolean>(false);
+    const [loading, toogleLoading ] = React.useState<boolean>(false);
+    const [popup, tooglePopup ] = React.useState<boolean>(false);
    
     const usernameInput = useInput({
         init:'',
@@ -92,19 +94,25 @@ const Singin : React.FunctionComponent = () => {
                 await db.collection('autor').doc( user.uid ).set({
                     username: usernameInput.value
                 });
+                tooglePopup( true );
                 toogleLoading(false);
                 }else{
+                    toogleLoading(false);
                     toogleCodeError(true);
             }
         }else {
+            
+            toogleLoading(false);
             tooglePasswordError(true);    
         }
     }catch( error ){
+        toogleLoading(false);
         tooogleEmailError(true);
     }}
 
 
     return (
+        <>
         <form className='auth__form' onSubmit={    ( e : React.FormEvent<HTMLFormElement>  ) => { 
                                             e.preventDefault();
                                             singin();
@@ -136,6 +144,23 @@ const Singin : React.FunctionComponent = () => {
             </Link>
             </div>
         </form>   
+        <Popup
+            showPopup={ popup }
+            tooglePopup={ () => tooglePopup( false ) }
+        >
+            <h2 className="popup-h2">
+                    La cuenta ha sido creada con exito
+            </h2>
+            <div className="button_wrapper">
+                <button 
+                    className="button__primary"
+                    onClick={ () => tooglePopup( false ) }
+                    > Aceptar 
+                </button>
+            </div>
+        </Popup>
+        </>
+        
     );
 }
 

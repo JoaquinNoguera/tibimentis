@@ -10,6 +10,7 @@ const Login = () => {
     
     const [emailError, tooogleEmailError ] = React.useState<boolean>(false);
     const [passwordError, tooglePasswordError ] = React.useState<boolean>(false); 
+    const [ tooManyError, toogleTooMany ] = React.useState<boolean>(false); 
     const [ loading, toogleLoading ] = React.useState<boolean>(false);
 
     const emailInput = useInputWhitError({
@@ -63,8 +64,13 @@ const Login = () => {
                         toogleLoading(false);
                         break;
                     }
+                    case 'auth/too-many-requests': {
+                        toogleTooMany(true);
+                        toogleLoading(false);
+                        break;
+                    }
                     default: {
-                        console.log(code);
+                         toogleLoading(false);
                     }
                 }
             });
@@ -85,7 +91,15 @@ const Login = () => {
             { emailInput.input }
            
             { passwordInput.input }
-         
+            {
+                tooManyError &&
+                <span
+                className='spanError'
+                >
+                Lo sentimos ha ingresado demasiadas veces mal las credenciales, pruebe devuelta en unos minutos
+                </span>
+            }
+            
                 
             <button
                 type="submit"
