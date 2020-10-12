@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 import { StateProvider} from '../backdoor/context/context';
 import Backdoor from '../backdoor';
+import Principal from '../principal';
 import './styles.scss';
 
 const App : React.FunctionComponent = () => {
@@ -14,6 +15,7 @@ const App : React.FunctionComponent = () => {
             <Switch>
                 <StateProvider>
                     <Route path="/backdoor" component={ Backdoor } />
+                    <Route component={ Principal } />
                 </StateProvider>
             </Switch>
         </BrowserRouter>
