@@ -1,0 +1,26 @@
+#home{
+    width: 100%;
+    margin-top: 56px;
+    min-height: calc( 100vh - 56px );
+    display: flex;
+    flex-direction: column;
+    .home__logo{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #f2f2f2;
+        height: 200px;
+        width: 100%;
+
+        h1{
+            font-size: 5em;
+            font-family: 'Kuenstler Script LT Std', sans-serif;
+        }
+    }
+    .home__cardsWrapper{
+        box-shadow: 0px -5px 10px 5px rgba(0,0,0,0.32);
+        flex: 1;
+        padding: 1em;
+        width: calc( 100% - 2em );
+    }
+}

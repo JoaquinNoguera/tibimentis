@@ -12,12 +12,10 @@ import './styles.scss';
 const App : React.FunctionComponent = () => {
     return(
         <BrowserRouter>
-            <Switch>
-                <StateProvider>
-                    <Route path="/backdoor" component={ Backdoor } />
+                <Switch>
+                    <Route path="/backdoor" component={ () =>  <StateProvider> <Backdoor/> </StateProvider> } />
                     <Route component={ Principal } />
-                </StateProvider>
-            </Switch>
+                </Switch>
         </BrowserRouter>
     );
 }

@@ -157,6 +157,7 @@ const EditStory = () => {
                         title: titleInput.value,
                         content: pTextarea.value,
                         isPublic: toogle.value,
+                        createDate: new Date(),
                         image:  ( image?.file ) ? state.id + titleInput.value + image?.file.name : null,
                         userId: state.id,
                         autorName: state.name,

@@ -59,6 +59,12 @@ return{
                 ],
             },
             {
+                test: /\.(woff|woff2|otf)$/,
+                use: {
+                  loader: 'url-loader',
+                },
+              },
+            {
                 test: /\.css$/,
                 exclude: [
                     /node_modules/,

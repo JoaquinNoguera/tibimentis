@@ -1,14 +1,15 @@
 import * as React from 'react';
 import './styles.scss';
 
-const Navbar = () => {
-    return(
+const Story = () => {
+    return (
         <div
-            id="navbar"
+            id="story"
         >
 
         </div>
+
     );
 }
 
-export default Navbar;
+export default Story;

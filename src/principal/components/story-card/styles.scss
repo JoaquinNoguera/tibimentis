@@ -1,0 +1,79 @@
+#story-card{
+    height: 250px;
+    width: 100%;
+    margin: 1em 0;
+    background-color: #f2f2f2;
+    display: flex;
+
+    .card__img{
+        height: 250px;
+        width: 250px;
+    }
+
+    .card__imgLoading{
+        height: 250px;
+        width:  250px;
+        background-color: #d9d9d9;
+    }
+
+    .card__content{
+        padding: 2em;
+        display: flex;
+        width: 100%;
+        overflow: hidden;
+        flex-direction: column;
+        height: calc( 100% - 4em );
+
+        h1{
+            font-size: 2em;
+            width: 100%;
+            margin:  0.3em 0;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            flex: 2;
+        }
+        p{
+            flex: 3;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: pre-wrap;
+        }
+        span{
+            flex: 1;
+            font-size: 1.5em;
+            font-family: 'Kuenstler Script LT Std', sans-serif;
+            align-self: flex-end;
+        }
+    }
+
+}
+
+#story-card:hover{
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    cursor: pointer;
+}
+
+
+@media (max-width: 600px){
+    #story-card{
+        flex-direction: column;
+        height: auto;
+        
+        .card__img{
+            width: 100%;
+        }
+    }
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 556px), 
+screen and (min-device-height: 320px) and (max-device-height: 556px){
+    #story-card{
+        flex-direction: column;
+        height: auto;
+        
+        .card__img{
+            width: 100%;
+        }
+    }
+}

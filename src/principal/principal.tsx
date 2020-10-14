@@ -10,6 +10,8 @@ import {
 } from 'react-spring';
 import NotFound from '../components/404';
 import Home from './pages/home';
+import Navbar from './components/navbar';
+import Story from './pages/story';
 import './styles.scss';
 
 const Principal = () => {
@@ -39,8 +41,10 @@ const Principal = () => {
                         style={ props }
                         key={key}
                     >
+                    <Navbar/>
                     <Switch location={item}>
                         <Route exact path="/" component={Home}/>
+                        <Route exact path="/historia/:id" component={ Story }/>
                         <Route component={NotFound}/>
                     </Switch>
                     </animated.div>
