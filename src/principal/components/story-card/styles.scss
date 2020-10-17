@@ -1,31 +1,34 @@
 #story-card{
-    height: 250px;
+    height: 285px;
     width: 100%;
     margin: 1em 0;
     background-color: #f2f2f2;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     display: flex;
 
     .card__img{
-        height: 250px;
-        width: 250px;
+        height: 285px;
+        width: 285px;
+        min-width: 285px;
+        background-position: center; 
+        background-repeat: no-repeat; 
+        background-size: cover;
     }
 
     .card__imgLoading{
-        height: 250px;
-        width:  250px;
+        height: 285px;
+        width: 285px;
         background-color: #d9d9d9;
     }
 
     .card__content{
         padding: 2em;
         display: flex;
-        width: 100%;
         overflow: hidden;
         flex-direction: column;
-        height: calc( 100% - 4em );
 
         h1{
-            font-size: 2em;
+            font-size: 2.2em;
             width: 100%;
             margin:  0.3em 0;
             text-overflow: ellipsis;
@@ -42,7 +45,7 @@
         span{
             flex: 1;
             font-size: 1.5em;
-            font-family: 'Kuenstler Script LT Std', sans-serif;
+            font-family: 'Kuenstler Script LT Std', 'Dancing Script', cursive;;
             align-self: flex-end;
         }
     }
@@ -50,7 +53,7 @@
 }
 
 #story-card:hover{
-    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.56), 0 3px 6px rgba(0,0,0,0.73);
     cursor: pointer;
 }
 
@@ -70,8 +73,8 @@
 screen and (min-device-height: 320px) and (max-device-height: 556px){
     #story-card{
         flex-direction: column;
+        max-width: calc( 100vw - 2em);
         height: auto;
-        
         .card__img{
             width: 100%;
         }

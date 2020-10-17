@@ -1,0 +1,51 @@
+#story{
+    margin-top: 56px;
+    padding: 2em;
+    display: flex;
+    flex-direction: column;
+    max-width: 1280px;
+    h1{
+        font-size: 4em;
+    }
+    p{
+        line-height:  2em;
+    }
+
+    .autor{
+        font-family: 'Kuenstler Script LT Std', 'Dancing Script', cursive;;
+        text-align: end;
+        font-size: 2em;
+    }
+
+    .card__image{
+        
+        float: right;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+        background-color: #f2f2f2;
+        height: 320px;
+        width: 280px;
+        padding: 20px;
+        max-width: calc( 100% - 2em );
+        align-self: center;
+        margin: 20px 10px 0 15px;
+
+        .image{
+            height: 260px;
+            background-position: center; 
+            background-repeat: no-repeat; 
+            background-size: cover;
+        }
+        
+    }
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 556px), 
+screen and (min-device-height: 320px) and (max-device-height: 556px){
+    #story{
+        .card__image{
+            margin: 0px;    
+            float: none;
+            max-width: calc( 100% - 2em );
+        }
+    }
+}

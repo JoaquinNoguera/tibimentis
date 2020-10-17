@@ -33,7 +33,7 @@ const StoryCard = ( { title, content, autorName, image, id  } : Story ) => {
     },[]);
 
     const renderImage = () => {
-        return ( loading ) ? <div className="card__imgLoading" /> : <img className="card__img" src={url} />;
+        return ( loading ) ? <div className="card__imgLoading" /> : <div className="card__img" style={{ backgroundImage: `url(${url})` }} />;
     }
     
     return(

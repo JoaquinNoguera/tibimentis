@@ -14,7 +14,7 @@
 
         h1{
             font-size: 5em;
-            font-family: 'Kuenstler Script LT Std', sans-serif;
+            font-family: 'Kuenstler Script LT Std', 'Dancing Script', cursive;;
         }
     }
     .home__cardsWrapper{
@@ -22,5 +22,24 @@
         flex: 1;
         padding: 1em;
         width: calc( 100% - 2em );
+        display: flex;
+        justify-content: center;
+
+        .home__cardsContainer{
+            width: 100%;
+            max-width: 1280px;
+        }
+    }
+}
+
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 556px), 
+screen and (min-device-height: 320px) and (max-device-height: 556px){
+    #home{
+        .home__logo{
+            h1{
+                font-size: 3.5em;
+            }
+        }
     }
 }

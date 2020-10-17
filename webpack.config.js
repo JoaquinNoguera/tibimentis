@@ -47,7 +47,7 @@ return{
                 },
             },
             {
-                test: /\.(jpg|svg)$/,
+                test: /\.(jpg|svg|woff|woff2|otf)$/,
                 use: [
                   {
                     loader: 'file-loader',
@@ -58,12 +58,6 @@ return{
                   },
                 ],
             },
-            {
-                test: /\.(woff|woff2|otf)$/,
-                use: {
-                  loader: 'url-loader',
-                },
-              },
             {
                 test: /\.css$/,
                 exclude: [
